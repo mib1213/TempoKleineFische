@@ -43,6 +43,7 @@ def fish_moves_forward(dice,
                                     fish_steps_list[j] += 1
                                     if fish_steps_list[j] == win_steps:
                                         have_crossed_the_sea_list[j] = 1
+                                        number_of_fishes_crossed_the_sea += 1
                                     break                                        
             else:
                 boat_steps += 1

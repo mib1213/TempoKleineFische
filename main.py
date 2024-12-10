@@ -4,7 +4,7 @@ from utils import check_for_winner, boat_moves_forward, fish_moves_forward
 def main():
     NUMBER_OF_FISHES = 4
     NUMBER_OF_SIMULATIONS = 10000
-    STEP_RANGE_START = -20
+    STEP_RANGE_START = -10
     STEP_RANGE_END = -1
     WIN_STEPS = 5
 
@@ -46,7 +46,7 @@ def main():
                                                                                                                                         win_steps=WIN_STEPS)
         total_wins = boat_win_count + fishes_win_count
         print(f"{step = }, boat_win_count = {boat_win_count/total_wins*100:.2f}%, fishes_win_count = {fishes_win_count/total_wins*100:.2f}%")
-        return
+    return
 
 if __name__ == '__main__':
     main()

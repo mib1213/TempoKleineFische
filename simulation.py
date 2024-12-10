@@ -44,9 +44,9 @@ def main():
                                                                                                                                 win_steps=WIN_STEPS)
             print(f"{boat_steps = }")
             print(f"{number_of_fishes_crossed_the_sea = }")
-            print(f"{fishes = }")    
+            print(f"{fishes['steps'] = }")    
         counter += 1
-        return
+    return
 
 if __name__ == '__main__':
     main()
