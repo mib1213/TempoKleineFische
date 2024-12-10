@@ -1,60 +1,52 @@
 import random
+from utils import check_for_winner, boat_moves_forward, fish_moves_forward
 
-dice = [range(6)]
+def main():
+    NUMBER_OF_FISHES = 4
+    NUMBER_OF_SIMULATIONS = 10000
+    STEP_RANGE_START = -20
+    STEP_RANGE_END = -1
+    WIN_STEPS = 5
 
-boat_steps = 0
-fish_1_steps = 0
-fish_2_steps = 0
-fish_3_steps = 0
-fish_4_steps = 0
+    initial_values = [0] * NUMBER_OF_FISHES
+    list_of_boat_steps_to_check = list(range(STEP_RANGE_START, STEP_RANGE_END + 1, 1))
 
-fish_1, fish_2, fish_3, fish_4 = 1, 1, 1, 1 # they are in the game
-fish_1_status, fish_2_status, fish_3_status, fish_4_status = 0, 0, 0, 0
+    for step in list_of_boat_steps_to_check:
+        boat_win_count = 0
+        fishes_win_count = 0
+        for _ in range(NUMBER_OF_SIMULATIONS):
+            fishes = {'steps': initial_values[:], 'caught_by_fisher?': initial_values[:], 'have_crossed_the_sea?': initial_values[:]}
+            boat_steps = step
+            number_of_fishes_crossed_the_sea = 0
+            number_of_fishes_caught_by_the_boat = 0
+            while True:
+                winner = check_for_winner(number_of_fishes_caught_by_the_boat, 
+                                        number_of_fishes_crossed_the_sea, 
+                                        number_of_fishes=NUMBER_OF_FISHES)
+                if winner == 'draw':
+                    break
+                if winner == 'boat':
+                    boat_win_count += 1
+                    break
+                if winner == 'fishes':
+                    fishes_win_count += 1
+                    break
+                dice = random.randint(0, NUMBER_OF_FISHES + 1)
+                if dice == NUMBER_OF_FISHES or dice == NUMBER_OF_FISHES + 1:
+                    boat_steps, number_of_fishes_caught_by_the_boat, fishes['caught_by_fisher?'] = boat_moves_forward(boat_steps,
+                                                                                                                      fish_steps=fishes['steps'],
+                                                                                                                      caught_by_fisher=fishes['caught_by_fisher?'])                                         
+                else:
+                    boat_steps, number_of_fishes_crossed_the_sea, fishes['steps'], fishes['have_crossed_the_sea?'] = fish_moves_forward(dice,
+                                                                                                                                        boat_steps,
+                                                                                                                                        number_of_fishes_crossed_the_sea,
+                                                                                                                                        fishes['steps'],
+                                                                                                                                        fishes['caught_by_fisher?'],
+                                                                                                                                        fishes['have_crossed_the_sea?'],
+                                                                                                                                        win_steps=WIN_STEPS)
+        total_wins = boat_win_count + fishes_win_count
+        print(f"{step = }, boat_win_count = {boat_win_count/total_wins*100:.2f}%, fishes_win_count = {fishes_win_count/total_wins*100:.2f}%")
+        return
 
-for i in range(100):
-    dice = random.randint(0, 5)
-    if dice == 0 or dice == 5:
-        boat_steps += 1
-        if boat_steps >= fish_1_steps:
-            fish_1 = 0
-        elif boat_steps >= fish_2_steps:
-            fish_2 = 0
-        elif boat_steps >= fish_3_steps:
-            fish_3 = 0
-        elif boat_steps >= fish_4_steps:
-            fish_4 = 0
-    elif dice == 1:
-        if fish_1:
-            if fish_1_steps < 10:
-                fish_1_steps += 1
-            else:
-                fish_1_status = 1
-        else:
-            boat_steps += 1
-    elif dice == 2:
-        if fish_2:
-            if fish_2_steps < 10:
-                fish_2_steps += 1
-            else:
-                fish_2_status = 1
-        else:
-            boat_steps += 1
-    elif dice == 3:
-        if fish_3:
-            if fish_3_steps < 10:
-                fish_3_steps += 1
-            else:
-                fish_3_status = 1
-        else:
-            boat_steps += 1
-    else:
-        if fish_4:
-            if fish_4_steps < 10:
-                fish_4_steps += 1
-            else:
-                fish_4_status = 1
-        else:
-            boat_steps += 1
-
-print(f"{boat_steps = }, {fish_1_steps = }, {fish_2_steps = }, {fish_3_steps = }, {fish_4_steps = }")
-print(f"{fish_1_status = }, {fish_2_status = }, {fish_3_status = }, {fish_4_status = }")
+if __name__ == '__main__':
+    main()
