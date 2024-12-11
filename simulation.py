@@ -7,3 +7,6 @@ for i in range(len(simulation_output['counter'])):
     print("===============================", "<br>")
     for key, value in simulation_output.items():
         print(key, value[i], "<br>")
+
+# for key, value in simulation_output.items():
+#     print(key, value)

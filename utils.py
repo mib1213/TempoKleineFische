@@ -1,4 +1,5 @@
 import random
+import copy
 
 def check_for_winner(number_of_fishes_caught_by_the_boat, 
                     number_of_fishes_crossed_the_sea, 
@@ -84,7 +85,7 @@ def run_simulation(step, number_of_fishes, win_steps):
                                                     caught_by_fisher=fishes['caught_by_fisher?'])
             boat_steps = boat_move_return[0]
             number_of_fishes_caught_by_the_boat = boat_move_return[1]
-            fishes['caught_by_fisher?'] = boat_move_return[2]                            
+            fishes['caught_by_fisher?'] = boat_move_return[2]                          
         else:
             fishes_move_return = fish_moves_forward(dice,
                                                     boat_steps,
@@ -102,9 +103,10 @@ def run_simulation(step, number_of_fishes, win_steps):
         simulation_output['boat_steps'].append(boat_steps)
         simulation_output['number_of_fishes_caught_by_the_boat'].append(number_of_fishes_caught_by_the_boat)
         simulation_output['number_of_fishes_crossed_the_sea'].append(number_of_fishes_crossed_the_sea)
-        simulation_output['fishes'].append(fishes)
+        simulation_output['fishes'].append(copy.deepcopy(fishes))
+
     
-    simulation_output['dice'].append(dice)
+    simulation_output['dice'].append(None)
     simulation_output['boat_steps'].append(None)
     simulation_output['number_of_fishes_caught_by_the_boat'].append(None)
     simulation_output['number_of_fishes_crossed_the_sea'].append(None)
