@@ -5,7 +5,8 @@ def check_for_winner(number_of_fishes_caught_by_the_boat,
                     number_of_fishes_crossed_the_sea, 
                     number_of_fishes):
     half_of_number_of_fishes = number_of_fishes // 2 
-    if number_of_fishes_caught_by_the_boat == half_of_number_of_fishes and number_of_fishes_crossed_the_sea == half_of_number_of_fishes:
+    if number_of_fishes_caught_by_the_boat == half_of_number_of_fishes \
+        and number_of_fishes_crossed_the_sea == half_of_number_of_fishes:
         return 'draw'
     if number_of_fishes_caught_by_the_boat >= half_of_number_of_fishes + 1:
         return 'boat'
@@ -31,7 +32,8 @@ def fish_moves_forward(dice,
                        fish_steps_list,
                        caught_by_fisher_list,
                        have_crossed_the_sea_list):
-    for i, (caught_by_fisher, have_crossed_the_sea) in enumerate(zip(caught_by_fisher_list, have_crossed_the_sea_list)):
+    for i, (caught_by_fisher, have_crossed_the_sea) \
+        in enumerate(zip(caught_by_fisher_list, have_crossed_the_sea_list)):
         if dice == i:
             if not caught_by_fisher:
                 if not have_crossed_the_sea:
@@ -40,7 +42,8 @@ def fish_moves_forward(dice,
                         have_crossed_the_sea_list[i] = 1
                         number_of_fishes_crossed_the_sea += 1
                 else:
-                    for j, (caught_by_fisher_inner, have_crossed_the_sea_inner) in enumerate(zip(caught_by_fisher_list, have_crossed_the_sea_list)):
+                    for j, (caught_by_fisher_inner, have_crossed_the_sea_inner) \
+                        in enumerate(zip(caught_by_fisher_list, have_crossed_the_sea_list)):
                         if not caught_by_fisher_inner:
                             if not have_crossed_the_sea_inner:
                                     fish_steps_list[j] += 1
@@ -55,7 +58,9 @@ def fish_moves_forward(dice,
 def run_simulation(step, number_of_fishes, win_steps):
     initial_values = [0] * number_of_fishes
 
-    fishes = {'steps': initial_values[:], 'caught_by_fisher?': initial_values[:], 'have_crossed_the_sea?': initial_values[:]}
+    fishes = {'steps': initial_values[:], 
+              'caught_by_fisher?': initial_values[:], 
+              'have_crossed_the_sea?': initial_values[:]}
     boat_steps = step
     number_of_fishes_crossed_the_sea = 0
     number_of_fishes_caught_by_the_boat = 0
@@ -81,8 +86,8 @@ def run_simulation(step, number_of_fishes, win_steps):
         
         if dice == number_of_fishes or dice == number_of_fishes + 1:
             boat_move_return = boat_moves_forward(boat_steps, 
-                                                    fish_steps=fishes['steps'], 
-                                                    caught_by_fisher=fishes['caught_by_fisher?'])
+                                                  fish_steps=fishes['steps'],
+                                                  caught_by_fisher=fishes['caught_by_fisher?'])
             boat_steps = boat_move_return[0]
             number_of_fishes_caught_by_the_boat = boat_move_return[1]
             fishes['caught_by_fisher?'] = boat_move_return[2]                          

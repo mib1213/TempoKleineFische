@@ -17,7 +17,9 @@ def main():
             elif winner == 'fishes':
                 fishes_win_count += 1
         total_wins = boat_win_count + fishes_win_count
-        print(f"{step = }, boat_win_count = {boat_win_count/total_wins*100:.2f}%, fishes_win_count = {fishes_win_count/total_wins*100:.2f}%")
+        print(f"{step = }")
+        print(f"boat_win_count = {boat_win_count/total_wins*100:.2f}%")
+        print(f"fishes_win_count = {fishes_win_count/total_wins*100:.2f}%")
     return
 
 if __name__ == '__main__':
