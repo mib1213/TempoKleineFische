@@ -77,7 +77,7 @@ def run_simulation(step, number_of_fishes, win_steps):
         if winner:
             break
         dice = random.randint(0, number_of_fishes + 1)
-        simulation_output['dice'].append(dice)
+        
         if dice == number_of_fishes or dice == number_of_fishes + 1:
             boat_move_return = boat_moves_forward(boat_steps, 
                                                     fish_steps=fishes['steps'], 
@@ -98,9 +98,15 @@ def run_simulation(step, number_of_fishes, win_steps):
             fishes['steps'] = fishes_move_return[2]
             fishes['have_crossed_the_sea?'] = fishes_move_return[3]
         counter += 1
+        simulation_output['dice'].append(dice)
         simulation_output['boat_steps'].append(boat_steps)
         simulation_output['number_of_fishes_caught_by_the_boat'].append(number_of_fishes_caught_by_the_boat)
         simulation_output['number_of_fishes_crossed_the_sea'].append(number_of_fishes_crossed_the_sea)
         simulation_output['fishes'].append(fishes)
     
+    simulation_output['dice'].append(dice)
+    simulation_output['boat_steps'].append(None)
+    simulation_output['number_of_fishes_caught_by_the_boat'].append(None)
+    simulation_output['number_of_fishes_crossed_the_sea'].append(None)
+    simulation_output['fishes'].append(None)
     return winner, simulation_output
