@@ -34,8 +34,8 @@ def fish_moves_forward(dice,
                        fish_steps_list,
                        caught_by_fisher_list,
                        have_crossed_the_sea_list):
-    for i, (caught_by_fisher, have_crossed_the_sea) \
-        in enumerate(zip(caught_by_fisher_list, have_crossed_the_sea_list)):
+    iterator = iter(zip(caught_by_fisher_list, have_crossed_the_sea_list))
+    for i, (caught_by_fisher, have_crossed_the_sea) in enumerate(iterator):
         if dice == i:
             if not caught_by_fisher:
                 if not have_crossed_the_sea:
@@ -44,15 +44,13 @@ def fish_moves_forward(dice,
                         have_crossed_the_sea_list[i] = 1
                         number_of_fishes_crossed_the_sea += 1
                 else:
-                    for j, (caught_by_fisher_inner, have_crossed_the_sea_inner) \
-                        in enumerate(zip(caught_by_fisher_list, have_crossed_the_sea_list)):
-                        if not caught_by_fisher_inner:
-                            if not have_crossed_the_sea_inner:
-                                    fish_steps_list[j] += 1
-                                    if fish_steps_list[j] == win_steps:
-                                        have_crossed_the_sea_list[j] = 1
-                                        number_of_fishes_crossed_the_sea += 1
-                                    break                                        
+                    for j, (caught_by_fisher_inner, have_crossed_the_sea_inner) in enumerate(iterator):
+                        if not caught_by_fisher_inner and not have_crossed_the_sea_inner:
+                            fish_steps_list[j] += 1
+                            if fish_steps_list[j] == win_steps:
+                                have_crossed_the_sea_list[j] = 1
+                                number_of_fishes_crossed_the_sea += 1
+                            break                                        
             else:
                 boat_steps += 1
     return (boat_steps, 
@@ -115,7 +113,6 @@ def run_simulation(step, number_of_fishes, win_steps):
         simulation_output['number_of_fishes_crossed_the_sea'].append(number_of_fishes_crossed_the_sea)
         simulation_output['fishes'].append(copy.deepcopy(fishes))
 
-    
     simulation_output['dice'].append(None)
     simulation_output['boat_steps'].append(None)
     simulation_output['number_of_fishes_caught_by_the_boat'].append(None)
