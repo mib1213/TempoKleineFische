@@ -7,3 +7,5 @@ for i in range(len(simulation_output['counter'])):
     print("===============================")
     for key, value in simulation_output.items():
         print(f"{key} = {value[i]}")
+
+print(simulation_output)
