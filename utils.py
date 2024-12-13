@@ -125,11 +125,9 @@ def run_simulation(step: int, number_of_fishes: int, win_steps: int) -> simulati
         simulation_output['caught_by_fisher'].append(tuple(caught_by_fisher))
         simulation_output['have_crossed_the_sea'].append(tuple(have_crossed_the_sea))
 
-    simulation_output['dice'].append(None)
-    simulation_output['boat_steps'].append(None)
-    simulation_output['number_of_fishes_caught_by_the_boat'].append(None)
-    simulation_output['number_of_fishes_crossed_the_sea'].append(None)
-    simulation_output['fish_steps'].append(None)
-    simulation_output['caught_by_fisher'].append(None)
-    simulation_output['have_crossed_the_sea'].append(None)
+    len_counter = len(simulation_output['counter'])
+    for key in simulation_output.keys():     
+        if len(simulation_output[key]) < len_counter:
+            simulation_output[key].append(None)
+
     return winner, simulation_output
