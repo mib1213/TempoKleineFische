@@ -5,6 +5,7 @@ def check_for_winner(number_of_fishes_caught_by_the_boat: int,
                      number_of_fishes_crossed_the_sea: int, 
                      number_of_fishes: int) -> Literal['draw', 'boat', 'fishes'] | None:
     half_of_number_of_fishes: int = number_of_fishes // 2 
+    # float division in case number of fishes is an odd number
     if number_of_fishes_caught_by_the_boat == half_of_number_of_fishes \
         and number_of_fishes_crossed_the_sea == half_of_number_of_fishes:
         return 'draw'
@@ -21,6 +22,10 @@ def boat_moves_forward(boat_steps: int,
                        caught_by_fisher: list[bool]) -> boat_return:
     boat_steps += 1
     number_of_fishes_caught_by_the_boat: int = 0
+    # number of fishes caught by the boat variable needs to be set to 0 everytime this function
+    # is called, the reason being the for loop below calculates the TOTAL number of fishes caught
+    # by the boat everytime, so even if there were fishes caught before, the below for loop will 
+    # count them again.
     for i, fish_steps in enumerate(fish_steps_list):
         if boat_steps >= fish_steps:
             caught_by_fisher[i] = 1
@@ -64,7 +69,7 @@ def fish_moves_forward(dice: int,
             have_crossed_the_sea_list)
 
 simulation_return: TypeAlias = tuple[str, dict[str: list[int] | list[bool]]]
-simulation: TypeAlias = dict[str: list[int] | list[tuple[int] | tuple[bool]]]
+simulation: TypeAlias = dict[str: list[int | tuple[int] | tuple[bool]]]
 
 def run_simulation(step: int, 
                    number_of_fishes: int, 
