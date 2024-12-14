@@ -66,7 +66,10 @@ def fish_moves_forward(dice: int,
 simulation_return: TypeAlias = tuple[str, dict[str: list[int] | list[bool]]]
 simulation: TypeAlias = dict[str: list[int] | list[tuple[int] | tuple[bool]]]
 
-def run_simulation(step: int, number_of_fishes: int, win_steps: int) -> simulation_return:
+def run_simulation(step: int, 
+                   number_of_fishes: int, 
+                   win_steps: int, 
+                   random_state: int = None) -> simulation_return:
     initial_values: list[0] = [0] * number_of_fishes
 
     fish_steps: list[int] = initial_values[:]
@@ -95,6 +98,9 @@ def run_simulation(step: int, number_of_fishes: int, win_steps: int) -> simulati
 
         if winner:
             break
+        if random_state:
+            random.seed(random_state)
+            random_state += counter
         dice: int = random.randint(0, number_of_fishes + 1)
         
         if dice == number_of_fishes or dice == number_of_fishes + 1:
